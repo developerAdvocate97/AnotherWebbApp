@@ -1,6 +1,8 @@
 package com.example.application.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 
 @Table(name = "items")
@@ -8,7 +10,8 @@ import javax.persistence.*;
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @JsonProperty
+    private long id;
 
     private String description;
 
