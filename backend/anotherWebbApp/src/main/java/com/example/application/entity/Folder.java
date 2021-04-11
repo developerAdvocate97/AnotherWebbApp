@@ -1,13 +1,14 @@
 package com.example.application.entity;
 
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.util.List;
 
-@Table(name = "items")
+
+@Table(name = "folders")
 @Entity
-public class Item {
+public class Folder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty
@@ -15,26 +16,23 @@ public class Item {
 
     private String description;
 
+    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name ="folder_id_key", referencedColumnName = "id")
+    private List<Item> items;
 
-    private Boolean completed;
-
-
-
-
-    public Item() {
+    public Folder() {
 
     }
 
 
 
-    public Item(Long id, String description, Boolean completed) {
+    public List<Item> getItems() {
+        return items;
+    }
 
-        this.id = id;
-        this.description = description;
-        this.completed = completed;
-        }
-
-
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
 
     public String getDescription() {
         return description;
@@ -44,12 +42,6 @@ public class Item {
         this.description = description;
     }
 
-    public Boolean getCompleted() {
-        return completed;
-    }
 
-    public void setCompleted(Boolean completed) {
-        this.completed = completed;
-    }
 
 }

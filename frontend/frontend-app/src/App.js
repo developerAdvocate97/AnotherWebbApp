@@ -4,6 +4,8 @@ import ItemComponent from './components/ItemComponent';
 import WelcomeHomeScreenComponent from './components/WelcomeHomeScreenComponent';
 import  {BrowserRouter as Router,Route,Switch} from 'react-router-dom'
 import UpdateItemComponent from './components/UpdateItemComponent';
+import FolderComponent from './components/FolderComponent';
+
 
 function App() {
   return (
@@ -17,6 +19,9 @@ function App() {
                       <Route path ="/"  exact component = {WelcomeHomeScreenComponent} />
                       <Route path ="/items" render={props => <ItemComponent {...props} />} />
                       <Route path ="/updateItem/:id" render={props => <UpdateItemComponent {...props} />} />
+                      <Route path ="/folders" render={props => <FolderComponent {...props} />} />
+                      <Route path ="/viewItems/:id" render={props => <ItemComponent {...props} />} />
+
                     </Switch>                  
               </Router>
       

@@ -10,4 +10,6 @@ public class AnotherWebbAppApplication {
 		SpringApplication.run(AnotherWebbAppApplication.class, args);
 	}
 
+
+
 }

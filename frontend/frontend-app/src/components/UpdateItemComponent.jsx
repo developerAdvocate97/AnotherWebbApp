@@ -13,7 +13,8 @@ class UpdateItemComponent extends React.Component{
             id: this.props.match.params.id,
             description: '',
             completed: false,
-            oldDescription: ''
+            oldDescription: '',
+            folderId: ''
 
         }
 
@@ -29,7 +30,8 @@ class UpdateItemComponent extends React.Component{
                 this.setState({
                     description: item.description,
                     oldDescription: item.description,
-                    completed: item.completed
+                    completed: item.completed,
+                    
                 });
 
         } );
@@ -69,8 +71,20 @@ class UpdateItemComponent extends React.Component{
 
     canceUpdateHanlder =  async (e) => {
 
+
+        
         e.preventDefault();
-        this.props.history.push('/items');
+
+        
+
+        if(this.state.folderId ===! '' || this.state.folderId ===! null ){
+            console.log("1");
+            this.props.history.push('/folders');
+
+        }else{
+            console.log("2");
+            this.props.history.push('/items');
+        }
         
     }
 

@@ -40,11 +40,11 @@ public class ItemController {
 
     // Update a Item
     @PutMapping("/items/{id}")
-    public Item updateItem(@PathVariable(value = "id") Long bookId,
+    public Item updateItem(@PathVariable(value = "id") Long itemId,
                            @Valid @RequestBody Item itemDetails) throws ItemNotFoundException {
 
-        Item item = itemRepository.findById(bookId)
-                .orElseThrow(() -> new ItemNotFoundException(bookId));
+        Item item = itemRepository.findById(itemId)
+                .orElseThrow(() -> new ItemNotFoundException(itemId));
 
         item.setCompleted(itemDetails.getCompleted());
         item.setDescription(itemDetails.getDescription());

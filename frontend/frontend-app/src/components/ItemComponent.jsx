@@ -1,5 +1,6 @@
 import React from 'react';
 import ItemService from '../services/ItemService';
+import FolderService from '../services/FolderService';
 
 
 
@@ -10,7 +11,9 @@ class ItemComponent extends React.Component{
         super(props)
         this.state = {
             items:[],
-            newItemDescription: ''
+            newItemDescription: '',
+            folder_id: this.props.match.params.id,
+            folder_description: ''         
             
         }
         this.addNewItemHandler = this.addNewItemHandler.bind(this);
@@ -30,26 +33,66 @@ class ItemComponent extends React.Component{
 
          ItemService.deleteItem(id).then(res => {
 
-            this.setState({items: this.state.items.filter(item => item.id != id)});
+            this.setState({items: this.state.items.filter(item => item.id !== id)});
          });
           
 
     }
 
     componentDidMount(){
+        if(this.state.folder_id == null){
+            console.log("1");
         ItemService.getItems().then((res) => {
             this.setState({items: res.data})
         });
+    }else{
+        
+        console.log("2");
+
+        
+        FolderService.getFolder(this.state.folder_id).then((res) => {
+            this.setState({folder_description: res.data.description,items: res.data.items});
+        
+        });
+    }
     }
 
 
     sendNewItemHandler =  async (e) => {
 
+        e.preventDefault();
+
+        if(this.state.folder_id == null){
+        console.log(this.state.folder_id);
         let item = {description: this.state.newItemDescription, completed: false};
         console.log('item => ' + JSON.stringify(item));
         await ItemService.createItem(item);
             this.props.history.push('/items');
-        
+        }else{
+
+
+            console.log(this.state.folder_id);
+        let item = {description: this.state.newItemDescription, completed: false};
+        console.log('item => ' + JSON.stringify(item));
+        var newItem = null;
+        await ItemService.createItem(item).then((res)=> {
+            newItem = res.data;
+            
+        });
+              
+        console.log(newItem);
+        var updatedItems = this.state.items
+        console.log(updatedItems);
+
+        updatedItems.push(newItem);
+        console.log(updatedItems);
+
+        let folder = {description: this.state.folder_description, items: updatedItems }
+        console.log('folder => ' + JSON.stringify(folder));
+        await FolderService.updateFolder(folder,this.state.folder_id);
+            this.props.history.push(`/viewItems/${this.state.folder_id}`);
+
+        }
 
     }
 
