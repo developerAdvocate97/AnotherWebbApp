@@ -10,7 +10,7 @@ CONSOLE="konsole --noclose -e"
 
 CURRENT_DIR="$PWD"
 cd "$CURRENT_DIR/frontend/frontend-app"
-$CONSOLE "npm start " 
+$CONSOLE "npm start " &
 
 
 ###########################################
@@ -22,6 +22,6 @@ $CONSOLE "npm start "
 cd ..
 cd ..
 cd "$CURRENT_DIR/backend/anotherWebbApp"
-#screen npm install && npm start && exit
 mvn spring-boot:run 
+$CONSOLE "mvn spring-boot:run " 
 
